@@ -1,4 +1,3 @@
-raise "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa"
 require "callable/version"
 
 module Callable
@@ -21,4 +20,4 @@ end
 
 ::Object.include(Callable)
 
-puts "X" + 1000
+puts "X" * 100
