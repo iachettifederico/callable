@@ -26,71 +26,55 @@ in one of two ways (don't forget to install the gem first).
 The first way is by invoking the callable method:
 
 ```ruby
-c = Callable( :ret_val )
-c.call
-=> ret_val
+  c = Callable( :ret_val )
+  c.call
+  => ret_val
 ```
 
 Take into account that if you pass a callable object (such as a
 lambda), you'll get it back as the return value:
 
 ```ruby
-c = Callable( ->{ :ret_val } )
-c.call
-=> ret_val
-```
-
-The second way to use it is invoking the #callable directly on the object you
-want to be callable:
-
-```ruby
-c = :ret_val.callable
-c.call
-=> ret_val
-```
-
-Like the example before, lambda, you'll get it back as the return value:
-
-```ruby
-c = ->{ :ret_val }.callable
-c.call
-=> ret_val
+  c = Callable( ->{ :ret_val } )
+  c.call
+  => ret_val
 ```
 
 The gem also ships with a #callable? method thar returns true if the
 object is callable and false if it's not.
 
 ```ruby
-:not_callable.callable?
-=> false
-->{ :not_callable }.callable?
-=> true
+  :not_callable.callable?
+  => false
+  
+  ->{ :not_callable }.callable?
+  => true
 ```
 
 This is the same as saying
 
 ```ruby
-xxx.respond_to? :call
+  xxx.respond_to? :call
 ```
 
 But I felt it would be more illustrative of it's purpose.
 
 ## Where to use it?
 
-Let me say where to use this gem (with a very
-trivial example).
+Let me say where to use this gem with a very
+trivial example.
 
 Imagine we have some class that admits an informer object that
 responds to the get_info method and returns a some information on a
 String.
 
 ```ruby
-class SomeClass
-  attr_writer :informer
-  def info
-    @informer.get_info
+  class SomeClass
+    attr_writer :informer
+    def info
+      @informer.get_info
+    end
   end
-end
 ```
 
 If we want to use this "informer" object, we must define a new class
@@ -101,25 +85,25 @@ method "call", instead of "get_info", because we now can toss a simple
 lambda to substitute it. We can rewrite the code above like this:
 
 ```ruby
-class SomeClass
-  attr_writer :informer
-  def info
-    @informer.call
+  class SomeClass
+    attr_writer :informer
+    def info
+      @informer.call
+    end
   end
-end
 ```
 
 And now we can define a class or module that responds to the call
 method. In that call method, we can get as fancy as we want:
 
 ```ruby
-module Informer
-  def call
-    # retrieve the information we need from wherever we want
-    # maybe a web service
-    # maybe a local file
+  module Informer
+    def call
+      # retrieve the information we need from wherever we want
+      # maybe a web service
+      # maybe a local file
+    end
   end
-end
 ```
 
 So, when we do:
@@ -149,7 +133,7 @@ thing like this:
 
 ```ruby
   something = SomeClass.new
-  something.informer = Callable "No info available" 
+  something.informer = Callable("No info available" )
   something.info
 ```
 
