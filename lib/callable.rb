@@ -19,5 +19,3 @@ module Callable
 end
 
 ::Object.include(Callable)
-
-puts "X" * 100
