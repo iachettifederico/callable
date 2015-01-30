@@ -1,3 +1,6 @@
+raise "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa"
+require "callable/version"
+
 module Callable
   def Callable( callable_or_not )
     if callable_or_not.respond_to?(:call)
@@ -16,5 +19,6 @@ module Callable
   end
 end
 
-Object.include(Callable)
-  
+::Object.include(Callable)
+
+puts "X" + 1000

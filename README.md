@@ -61,6 +61,59 @@ But I felt it would be more illustrative of it's purpose.
 
 ## Where to use it?
 
+I think the main use for this library is handling actions as options.
+
+For example, imagine we have a very reduced authorization library that provides a method called `do_if`.
+This method receives:
+  - a symbol representing a permission name
+  - a Hash that represents the available authorization policies
+  - a block with the actions to perform
+
+The premise is that the method will execute the block if the selected policy returns true when we send the `call` message.
+
+Our first approach is:
+
+```ruby
+  def do_if(permission, policies=POLICIES)
+    yield if policies[permission].call
+  end
+```
+
+So, if our POLICIES hash is:
+
+```ruby
+  POLICIES = {
+    development: -> { true }
+  }
+  
+  do_if(:development) do
+    puts "Debugging"
+  end
+  
+  # >> Debugging
+```
+
+And if we switch the policy value:
+
+```ruby
+  POLICIES = {
+    development: -> { false }
+  }
+  
+  do_if(:development) do
+    puts "Debugging"
+  end
+  
+  # >> 
+```
+
+This allows us to have a lot of flexibility. But we could provide the user a way to say the same with less code:
+
+
+
+
+
+*******************************
 Let me say where to use this gem with a very
 trivial example.
 
