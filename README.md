@@ -2,11 +2,11 @@
 
 Create callable objects on the fly.
 
-It's easy to create a calable object in Ruby (understanding callable
+It's easy to create a callable object in Ruby (understanding callable
 as an object that supports the `#call` method), you just wrap it in a
 lambda and that's it. 
 
-Although this approach is correct, it lucks some expresiveness. Wouldn't it
+Although this approach is correct, it lacks some expressiveness. Wouldn't it
 be better to just say:
 
 ```ruby
@@ -45,7 +45,7 @@ lambda), you'll get it back as the return value:
   # => #<Proc:0x0000000261e138@-:6 (lambda)>
 ```
 
-The gem also ships with a #callable? method thar returns true if the
+The gem also ships with a #callable? method that returns true if the
 object is callable and false if it's not.
 
 ```ruby
@@ -62,7 +62,7 @@ This is the same as saying
   xxx.respond_to? :call
 ```
 
-But I felt it would be more illustrative of it's purpose.
+But I felt it would be more illustrative of its purpose.
 
 ## Where to use it?
 
@@ -130,7 +130,7 @@ Now we can put the raw value we want to get back without the need of the lambda
   }
 ```
 
-Even thou using a lambda adds just a few more characters, in my opinion, it clutters the code. By being able to leave it out, the code reads much better.
+Even though using a lambda adds just a few more characters, in my opinion, it clutters the code. By being able to leave it out, the code reads much better.
 
 ## Installation
 
