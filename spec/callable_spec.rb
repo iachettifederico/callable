@@ -75,4 +75,11 @@ scope Callable do
       @c.call("Call", "me", "now") == "Call me now"
     end
   end
+  scope "default value" do
+    spec "returns the default value when passing nil" do
+      @c = Callable(nil, default: "DEFAULT VALUE")
+
+      @c.call == "DEFAULT VALUE"
+    end
+  end
 end

@@ -1,7 +1,8 @@
 require "callable/version"
 
 module Callable
-  def Callable( callable_or_not )
+  def Callable( callable_or_not, default: nil )
+    return Callable(default) if callable_or_not.nil?
     if callable_or_not.respond_to?(:call)
       callable_or_not
     else
