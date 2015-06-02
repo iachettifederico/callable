@@ -64,6 +64,19 @@ This is the same as saying
 
 But I felt it would be more illustrative of its purpose.
 
+### Default value
+
+If you don't like to deal with `nil`s, callable ships with a `default` option for when `Callable` wraps `nil`.
+
+```ruby
+  Callable(nil).call
+  # => nil
+
+  Callable(nil, default: "I'm not 'nil' anymore!").call
+  # => "I'm not 'nil' anymore!"
+```
+
+
 ## Where to use it?
 
 I think the main use for this library is handling actions as options.
