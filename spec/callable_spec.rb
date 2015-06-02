@@ -81,5 +81,11 @@ scope Callable do
 
       @c.call == "DEFAULT VALUE"
     end
+
+    spec "the default default value is nil" do
+      @c = Callable(nil)
+
+      @c.call == nil
+    end
   end
 end
