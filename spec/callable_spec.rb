@@ -1,91 +1,92 @@
 require "spec_helper"
+require "callable"
 
-scope Callable do
-  spec "creates a callable object" do
-    @obj = :not_callable
-    @c = Callable(@obj)
+RSpec.describe Callable do
+  it "creates a callable object" do
+    c = Callable('NOT CALLABLE')
 
-    @c.call == @obj
+    expect(c.call).to eql('NOT CALLABLE')
   end
 
-  spec "leaves a callable object intact" do
-    @obj = -> { :callable }
-    @c = Callable(@obj)
+  it "leaves a callable object intact" do
+    obj = -> { 'whatever' }
+    c = Callable(obj)
 
-    @c == @obj
+    expect(c).to eql(obj)
   end
 
-  scope "#callable" do
-    spec "creates a callable object" do
-      @obj = :not_callable
-      @c = @obj.callable
+  describe "#callable" do
+    it "creates a callable object" do
+      obj = 'NOT CALLABLE'
+      c = obj.callable
 
-      @c.call == @obj
+      expect(c.call).to eql(obj)
     end
 
-    spec "leaves a callable object intact" do
-      @obj = -> { :callable }
-      @c = @obj.callable
+    it "leaves a callable object intact" do
+      obj = -> { 'CALLABLE' }
+      c = obj.callable
 
-      @c == @obj
+      expect(c).to eql(obj)
     end
 
   end
 
-  scope "#callable?" do
-    spec "returns true if the object responds to #call" do
-      @obj = -> { :callable }
+  describe "#callable?" do
+    it "returns true if the object responds to #call" do
+      obj = -> { 'CALLABLE' }
 
-      @obj.callable?
+      expect(obj.callable?).to eql(true)
     end
 
-    spec "returns false if the object doesn't respond to #call" do
-      @obj = :not_callable
+    it "returns false if the object doesn't respond to #call" do
+      obj = 'NOT CALLABLE'
 
-      ! @obj.callable?
+      expect(obj.callable?).to eql(false)
+    end
+  end
+
+  describe "arguments" do
+    it "accepts arguments arguments" do
+      obj = 'NOT CALLABLE'
+      c = Callable(obj)
+
+      expect(c.call(1, 2, 3)).to eql('NOT CALLABLE')
+    end
+
+    it "passes the arguments on" do
+      obj = -> (a, b) { a + " " + b }
+      c = Callable(obj)
+
+      expect(c.call("Call", "me")).to eql("Call me")
+    end
+
+    it "can pass any number of arguments to a proc" do
+      obj = proc { |a, b| a + " " + b }
+      c = Callable(obj)
+
+      expect(c.call("Call", "me", "now")).to eql("Call me")
+    end
+
+    it "passes the arguments on" do
+      obj = -> (*args) { args.join(" ") }
+      c = Callable(obj)
+
+      expect(c.call("Call", "me", "now")).to eql("Call me now")
     end
   end
 
-  scope "arguments" do
-    spec "accepts arguments arguments" do
-      @obj = :not_callable
-      @c = Callable(@obj)
+  describe "default value" do
+    it "the default default value is nil" do
+      c = Callable(nil)
 
-      @c.call(1, 2, 3) == @obj
+      expect(c.call).to eql(nil)
     end
 
-    spec "passes the arguments on" do
-      @obj = -> (a, b) { a + " " + b }
-      @c = Callable(@obj)
+    it "returns the default value when passing nil" do
+      c = Callable(nil, default: "DEFAULT VALUE")
 
-      @c.call("Call", "me") == "Call me"
-    end
-
-    spec "can pass any number of arguments to a proc" do
-      @obj = proc { |a, b| a + " " + b }
-      @c = Callable(@obj)
-
-      @c.call("Call", "me", "now") == "Call me"
-    end
-
-    spec "passes the arguments on" do
-      @obj = -> (*args) { args.join(" ") }
-      @c = Callable(@obj)
-
-      @c.call("Call", "me", "now") == "Call me now"
-    end
-  end
-  scope "default value" do
-    spec "returns the default value when passing nil" do
-      @c = Callable(nil, default: "DEFAULT VALUE")
-
-      @c.call == "DEFAULT VALUE"
-    end
-
-    spec "the default default value is nil" do
-      @c = Callable(nil)
-
-      @c.call == nil
+      expect(c.call).to eql("DEFAULT VALUE")
     end
   end
 end
